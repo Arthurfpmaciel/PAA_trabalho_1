@@ -103,14 +103,16 @@ class MaxRectsBin(Bin):
 
 # classe que gerencia as bins e os algoritmos de bin packing
 class BinPacking:
-    def __init__(self):
+    def __init__(self,w=10,h=10):
+        self.bin_w = w
+        self.bin_h = h
         self.bins = []
     # cria uma nova bin que atende ao tipo de algoritmo de bin packing
-    def new_bin(self, w = 10, h = 10, type = "bl"):
+    def new_bin(self, type = "bl"):
         if type == "bl":
-            self.bins.append(Bin(w,h))
+            self.bins.append(Bin(self.bin_w,self.bin_h))
         if type == "mr":
-            self.bins.append(MaxRectsBin(w,h))
+            self.bins.append(MaxRectsBin(self.bin_w,self.bin_h))
     
     # algoritmo de bin packing bottom left:
     # busca colocar um novo item mais ao fundo e a mais a esquerda possível
@@ -144,7 +146,7 @@ class BinPacking:
                     packed = True
                     break
             if not packed:
-                self.new_bin(10,10,type="mr")
+                self.new_bin(type="mr")
                 self.bins[-1].insert(item)
 
     # visualização gráfica das bins
@@ -166,13 +168,35 @@ class BinPacking:
                 color_index+=1
         plt.show()
 
+def generate_data(bin_w, bin_h, min_item_size, max_item_size, n_itens):
+    itens = generate_random_itens(n_itens, min_item_size, max_item_size)
+    bp = BinPacking(bin_w,bin_h)
+    return bp, itens
 
-itens = generate_random_itens(10)
-bp  = BinPacking()
-bp.bottom_left(itens)
-bp.show_bins()
+def save_data(bp:BinPacking, itens, file):
+    with open(file, 'w') as f:
+        f.write(f"{bp.bin_w} {bp.bin_h}\n")
+        for i in itens:
+            f.write(f"{i.w} {i.h}\n")
+
+def load_data(file):
+    itens = []
+    bp = None
+    with open(file,'r') as f:
+        for idx, line in enumerate(f):
+            w,h = map(int, line.strip().split())
+            if idx==0:
+                bp = BinPacking(w,h)
+            else:
+                itens.append(Item(w,h))
+    return bp, itens
+
+# itens = generate_random_itens(10)
+# bp  = BinPacking()
+# bp.bottom_left(itens)
+# bp.show_bins()
 
 
-bp  = BinPacking()
-bp.max_rects(itens)
-bp.show_bins()
+# bp  = BinPacking()
+# bp.max_rects(itens)
+# bp.show_bins()
