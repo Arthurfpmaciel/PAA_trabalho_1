@@ -191,12 +191,15 @@ def load_data(file):
                 itens.append(Item(w,h))
     return bp, itens
 
-# itens = generate_random_itens(10)
+# itens = generate_random_itens(50)
 # bp  = BinPacking()
 # bp.bottom_left(itens)
 # bp.show_bins()
 
+bp, itens = load_data("./data/teste_12.txt")
+
+
 
 # bp  = BinPacking()
-# bp.max_rects(itens)
-# bp.show_bins()
+bp.bottom_left(itens)
+bp.show_bins()
