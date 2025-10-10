@@ -1,6 +1,7 @@
 import random
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+import time
 
 # elemento bidimensional com dimensões e coordenadas
 class Item:
@@ -13,6 +14,8 @@ class Item:
     def set_position(self,x,y):
         self.x = x
         self.y = y
+    def area(self):
+        return self.w * self.h
 
 # gera n itens em um intervalo de inteiros
 def generate_random_itens(n, min_value = 1, max_value=7):
@@ -47,6 +50,15 @@ class Bin:
             self.itens.append(item)
             return True
         return False
+    
+    def filled_area(self):
+        return sum([i.area() for i in self.itens])
+    
+    def void_area(self):
+        void_area = self.w * self.h - self.filled_area()
+        return void_area
+        
+
 
 # extensão da classe Bin para o algoritmo max rects
 class MaxRectsBin(Bin):
@@ -117,6 +129,7 @@ class BinPacking:
     # algoritmo de bin packing bottom left:
     # busca colocar um novo item mais ao fundo e a mais a esquerda possível
     def bottom_left(self,itens):
+        start = time.time()
         for item in itens:
             placed = False
             for bin in self.bins:
@@ -133,11 +146,12 @@ class BinPacking:
             if not placed:
                 self.new_bin()
                 self.bins[-1].pack(item,0,0)
-        return self.bins
+        return time.time()-start
     
     # algoritmo de bin packin maximal rectangles
     # armazena os retangulos vazios na bin e quando recebe um novo item busca coloca-lo no retangulo vazio em que ele melhor se encaixa
     def max_rects(self,itens):
+        start = time.time()
         for item in itens:
             packed = False
             for b in self.bins:
@@ -148,6 +162,7 @@ class BinPacking:
             if not packed:
                 self.new_bin(type="mr")
                 self.bins[-1].insert(item)
+        return time.time()-start
 
     # visualização gráfica das bins
     def show_bins(self):
@@ -167,6 +182,15 @@ class BinPacking:
                 ax.text(i.x + i.w/2, i.y + i.h/2, f"{i.w}x{i.h}", ha='center', va='center')
                 color_index+=1
         plt.show()
+
+    def void_areas(self, ignore_last = False):
+        void_areas = sum([b.void_area() for b in self.bins])
+        if ignore_last:
+            void_areas -= self.bins[-1].void_area()
+        return void_areas
+    
+    def filled_areas(self):
+        return sum([b.filled_area() for b in self.bins])
 
 def generate_data(bin_w, bin_h, min_item_size, max_item_size, n_itens):
     itens = generate_random_itens(n_itens, min_item_size, max_item_size)
@@ -191,15 +215,15 @@ def load_data(file):
                 itens.append(Item(w,h))
     return bp, itens
 
+
+
 # itens = generate_random_itens(50)
 # bp  = BinPacking()
 # bp.bottom_left(itens)
 # bp.show_bins()
 
-bp, itens = load_data("./data/teste_12.txt")
+# bp, itens = load_data("./data/teste_12.txt")
 
-
-
-# bp  = BinPacking()
-bp.bottom_left(itens)
-bp.show_bins()
+# # bp  = BinPacking()
+# bp.bottom_left(itens)
+# bp.show_bins()
