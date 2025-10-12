@@ -57,8 +57,6 @@ class Bin:
     def void_area(self):
         void_area = self.w * self.h - self.filled_area()
         return void_area
-        
-
 
 # extensão da classe Bin para o algoritmo max rects
 class MaxRectsBin(Bin):
