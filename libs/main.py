@@ -1,10 +1,8 @@
+import os
 import copy
 from bidimensional import BinPacking, generate_random_itens, load_data
 
 def run_and_display_results(bin_w, bin_h, itens, test_name):
-    """
-    Executa ambas as heurísticas para um conjunto de itens e exibe os resultados.
-    """
     print("\n" + "="*40)
     print(f"  Resultados para: {test_name}")
     print(f"  Itens a serem empacotados: {len(itens)}")
@@ -40,22 +38,80 @@ def run_and_display_results(bin_w, bin_h, itens, test_name):
         elif choice == 'n':
             break
 
+def escolher_arquivo():
+    """
+    Permite escolher um arquivo de teste dentro de data/binXX/grupo/
+    """
+    base_path = "data"
+
+    print("\nEscolha o tamanho do bin:")
+    print("1. bin10")
+    print("2. bin20")
+    choice_bin = input("Opção: ")
+    if choice_bin == '1':
+        bin_folder = "bin10"
+    elif choice_bin == '2':
+        bin_folder = "bin20"
+    else:
+        print("\n[ERRO] Opção inválida.")
+        return None
+
+    print("\nEscolha o grupo de itens:")
+    print("1. grandes")
+    print("2. medios")
+    print("3. pequenos")
+    choice_group = input("Opção: ")
+    if choice_group == '1':
+        group_folder = "grandes"
+    elif choice_group == '2':
+        group_folder = "medios"
+    elif choice_group == '3':
+        group_folder = "pequenos"
+    else:
+        print("\n[ERRO] Opção inválida.")
+        return None
+
+    folder_path = os.path.join(base_path, bin_folder, group_folder)
+
+    if not os.path.exists(folder_path):
+        print(f"\n[ERRO] Pasta não encontrada: {folder_path}")
+        return None
+
+    arquivos = [f for f in os.listdir(folder_path) if f.endswith(".txt")]
+    if not arquivos:
+        print("\n[ERRO] Nenhum arquivo .txt encontrado nessa pasta.")
+        return None
+
+    print("\nArquivos disponíveis:")
+    for i, arq in enumerate(arquivos, start=1):
+        print(f"{i}. {arq}")
+
+    try:
+        choice_file = int(input("\nEscolha o número do arquivo: "))
+        if 1 <= choice_file <= len(arquivos):
+            return os.path.join(folder_path, arquivos[choice_file - 1])
+        else:
+            print("\n[ERRO] Escolha inválida.")
+            return None
+    except ValueError:
+        print("\n[ERRO] Entrada inválida.")
+        return None
+
+
 def main():
-    """
-    Função principal que exibe o menu e gerencia a entrada do usuário.
-    """
     while True:
         print("\n" + "="*50)
         print("    INTERFACE DE TESTES PARA BIN PACKING 2D")
         print("="*50)
         print("\nEscolha um dos testes abaixo:\n")
-        print("1. Teste Pequeno (20 itens) - Ideal para visualização rápida.")
-        print("2. Teste Médio (100 itens) - Um cenário balanceado.")
-        print("3. Teste Grande (500 itens) - Para comparar desempenho em escala.")
-        print("4. Teste Desafiador (50 itens grandes) - Itens com tamanho próximo ao da caixa.")
-        print("5. Teste com Itens Variados (200 itens) - Mistura de itens muito pequenos e grandes.")
-        print("6. Carregar de Arquivo (data/teste.txt) - Use um conjunto de dados predefinido.")
-        print("9. Teste Personalizado - Você define todos os parâmetros.")
+        print("1. Teste Pequeno (20 itens)")
+        print("2. Teste Médio (100 itens)")
+        print("3. Teste Grande (500 itens)")
+        print("4. Teste Desafiador (50 itens grandes)")
+        print("5. Teste com Itens Variados (200 itens)")
+        print("6. Carregar de Arquivo Específico (data/binteste.txt)")
+        print("7. Escolher Arquivo de Teste (.txt da pasta data/binXX/grupo)")
+        print("9. Teste Personalizado")
         print("0. Sair\n")
 
         choice = input("Digite sua escolha: ")
@@ -80,7 +136,7 @@ def main():
             run_and_display_results(bin_w, bin_h, itens, test_name)
 
         elif choice == '4':
-            test_name = "Teste Desafiador (Itens Grandes)"
+            test_name = "Teste Desafiador"
             itens = generate_random_itens(n=50, min_value=4, max_value=8)
             run_and_display_results(bin_w, bin_h, itens, test_name)
 
@@ -90,21 +146,28 @@ def main():
             itens_grandes = generate_random_itens(n=100, min_value=4, max_value=7)
             itens = itens_pequenos + itens_grandes
             run_and_display_results(bin_w, bin_h, itens, test_name)
-        
+
         elif choice == '6':
-            test_name = "Carregar de Arquivo"
-            file_path = ".data/teste.txt"  # Altere este caminho se necessário
+            test_name = "Arquivo Específico"
+            file_path = "data/binteste.txt"
             try:
                 bp_template, itens = load_data(file_path)
                 run_and_display_results(bp_template.bin_w, bp_template.bin_h, itens, test_name)
-            except FileNotFoundError:
-                print(f"\n[ERRO] Arquivo não encontrado em: '{file_path}'")
-                print("Por favor, crie o arquivo ou escolha outra opção.")
             except Exception as e:
-                print(f"\n[ERRO] Ocorreu um problema ao ler o arquivo: {e}")
+                print(f"\n[ERRO] {e}")
+
+        elif choice == '7':
+            file_path = escolher_arquivo()
+            if file_path:
+                print(f"\nArquivo selecionado: {file_path}")
+                try:
+                    bp_template, itens = load_data(file_path)
+                    run_and_display_results(bp_template.bin_w, bp_template.bin_h, itens, f"Arquivo: {os.path.basename(file_path)}")
+                except Exception as e:
+                    print(f"\n[ERRO] Falha ao carregar arquivo: {e}")
 
         elif choice == '9':
-            test_name = "Teste Personalizado"
+            # opção personalizada (sem mudanças)
             try:
                 p_bin_w = int(input("Largura da caixa (padrão 10): ") or "10")
                 p_bin_h = int(input("Altura da caixa (padrão 10): ") or "10")
@@ -115,24 +178,19 @@ def main():
                 if p_min_val > p_max_val:
                     print("\n[ERRO] O tamanho mínimo não pode ser maior que o máximo.")
                     continue
-                if p_max_val > p_bin_w or p_max_val > p_bin_h:
-                    print("\n[AVISO] O tamanho máximo do item é maior que a dimensão da caixa.")
 
                 itens = generate_random_itens(p_n_itens, p_min_val, p_max_val)
-                run_and_display_results(p_bin_w, p_bin_h, itens, test_name)
-
-            except ValueError:
-                print("\n[ERRO] Por favor, insira apenas números inteiros.")
+                run_and_display_results(p_bin_w, p_bin_h, itens, "Teste Personalizado")
             except Exception as e:
-                print(f"\n[ERRO] Ocorreu um erro inesperado: {e}")
-        
+                print(f"\n[ERRO] {e}")
+
         elif choice == '0':
             print("\nSaindo do programa. Até mais!")
             break
-            
+
         else:
-            print("\n[ERRO] Opção inválida. Por favor, tente novamente.")
-        
+            print("\n[ERRO] Opção inválida.")
+
         input("\nPressione Enter para continuar...")
 
 
