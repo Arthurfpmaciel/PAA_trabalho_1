@@ -1,36 +1,89 @@
 import bidimensional as bpp
-import pandas as pd
+import os
+import time
+import copy
 
-df = pd.DataFrame(columns=["n_itens","bin_h_and_w","itens_group","time","n_bins",
-                           "total_filled_area","total_void_area","total_void_area_ignore_last","algorithm"])
+# Pasta onde estão os arquivos de teste
+bins_folder = "./data"
 
+# Heurísticas a testar
+algorithms = ["bottom_left", "max_rects"]
 
-print("Teste do algoritmo Botton Left")
-algorithm = "botton_left"
-bin_w_and_h = [10,20]
-n_itens = [i*100 for i in range(1,11)]
-item_sizes_range = {"group_1":[1,10],"group_2":[1,7],"group_3":[1,3]}
-count = 1
-for i in n_itens:
-    for j in list(item_sizes_range.keys()):
-        for k in bin_w_and_h:
-            file = f"./data/teste_{count}.txt"
-            bp, itens = bpp.load_data(file)
-            timer = bp.bottom_left(itens)
-            df.loc[len(df)] = [i, k, j, timer, len(bp.bins),bp.filled_areas(), bp.void_areas(), bp.void_areas(True), algorithm]
-            count+=1
+# Arquivo de saída
+output_file = "./data/execucao_formatada.txt"
 
+# Função auxiliar para alinhar as colunas
+def format_row(columns):
+    """Formata as colunas para espaçamento fixo."""
+    return (
+        f"{str(columns[0]):<10}"   # bin_size
+        f"{str(columns[1]):<10}"   # n_itens
+        f"{str(columns[2]):<12}"   # item_group
+        f"{str(columns[3]):<15}"   # algorithm
+        f"{str(columns[4]):<10}"   # n_bins
+        f"{str(columns[5]):<12}"   # time_sec
+        f"{str(columns[6]):<18}"   # total_filled_area
+        f"{str(columns[7]):<18}"   # total_void_area
+        f"{str(columns[8]):<18}"   # total_void_area_ignore_last
+    )
 
-print("Teste do algoritmo Max Rects")
-algorithm = "max_rects"
-count = 1
-for i in n_itens:
-    for j in list(item_sizes_range.keys()):
-        for k in bin_w_and_h:
-            file = f"./data/teste_{count}.txt"
-            bp, itens = bpp.load_data(file)
-            timer = bp.max_rects(itens)
-            df.loc[len(df)] = [i, j, k, timer, len(bp.bins), bp.filled_areas(), bp.void_areas(), bp.void_areas(True), algorithm]
-            count+=1
+with open(output_file, "w") as f:
+    for algo in algorithms:
+        f.write(f"\n{'='*30}\n")
+        f.write(f"RESULTADOS DO ALGORITMO: {algo.upper()}\n")
+        f.write(f"{'='*30}\n\n")
 
-df.to_csv("./data/df_val.csv", index=False)
+        # Cabeçalho da tabela
+        f.write(format_row([
+            "bin_size", "n_itens", "item_group", "algorithm",
+            "n_bins", "time_sec", "total_filled_area",
+            "total_void_area", "total_void_area_ignore_last"
+        ]) + "\n")
+        f.write("-" * 110 + "\n")
+
+        for bin_size_folder in os.listdir(bins_folder):
+            bin_size_path = os.path.join(bins_folder, bin_size_folder)
+            if not os.path.isdir(bin_size_path):
+                continue
+
+            # Extrai tamanho do bin
+            try:
+                bin_size = int(bin_size_folder.replace("bin", ""))
+            except:
+                continue
+
+            for item_group_folder in os.listdir(bin_size_path):
+                group_path = os.path.join(bin_size_path, item_group_folder)
+                if not os.path.isdir(group_path):
+                    continue
+
+                for file_name in os.listdir(group_path):
+                    file_path = os.path.join(group_path, file_name)
+                    bp, itens = bpp.load_data(file_path)
+
+                    bp_copy = copy.deepcopy(bp)
+                    itens_copy = copy.deepcopy(itens)
+
+                    start = time.time()
+                    if algo == "bottom_left":
+                        bp_copy.bottom_left(itens_copy)
+                    else:
+                        bp_copy.max_rects(itens_copy)
+                    elapsed = time.time() - start
+
+                    # Escreve resultado formatado
+                    f.write(format_row([
+                        bin_size,
+                        len(itens),
+                        item_group_folder,
+                        algo,
+                        len(bp_copy.bins),
+                        f"{elapsed:.6f}",
+                        bp_copy.filled_areas(),
+                        bp_copy.void_areas(),
+                        bp_copy.void_areas(ignore_last=True)
+                    ]) + "\n")
+
+        f.write("\n\n")
+
+print(f"Resultados organizados e salvos em {output_file}")

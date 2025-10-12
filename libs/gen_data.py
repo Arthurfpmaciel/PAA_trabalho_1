@@ -1,16 +1,44 @@
+import os
 from bidimensional import generate_data, save_data
 
-bin_w = 10
-bin_h = 10
-count = 0
+# parâmetros dos bins e itens
+bin_sizes = [10, 20]
+n_itens_list = [100, 200, 400, 800, 1600, 3200, 6400, 12800]
+item_sizes_range = {
+    "pequenos": [1, 3],
+    "medios": [1, 7],
+    "grandes": [1, 10]
+}
 
-bin_w_and_h = [10,20]
-n_itens = [i*100 for i in range(1,11)]
-item_sizes_range = [[1,10],[1,7],[1,3]]
+# cria a pasta principal
+os.makedirs("./data", exist_ok=True)
 
-for i in n_itens:
-    for j in item_sizes_range:
-        for k in bin_w_and_h:
-            bp, itens = generate_data(k, k,j[0],j[1],i)
-            count+=1
-            save_data(bp,itens,f"./data/teste_{count}.txt")
+# contadores para cada combinação bin x faixa
+counters = {
+    10: {"pequenos": 0, "medios": 0, "grandes": 0},
+    20: {"pequenos": 0, "medios": 0, "grandes": 0}
+}
+
+for bin_size in bin_sizes:
+    for faixa, size_range in item_sizes_range.items():
+        # cria subpasta para cada bin e faixa de tamanho
+        folder = f"./data/bin{bin_size}/{faixa}"
+        os.makedirs(folder, exist_ok=True)
+        
+        for n in n_itens_list:
+            # gera os dados
+            bp, itens = generate_data(bin_size, bin_size,
+                                      size_range[0], size_range[1], n)
+            
+            # incrementa o contador
+            counters[bin_size][faixa] += 1
+            count = counters[bin_size][faixa]
+            
+            # define o nome do arquivo
+            filename = f"{folder}/teste_bin{bin_size}_{faixa}_{count}.txt"
+            
+            # salva o arquivo
+            save_data(bp, itens, filename)
+            
+            # imprime para conferência
+            print(f"Gerado {filename} com {len(itens)} itens ({size_range[0]}-{size_range[1]})")

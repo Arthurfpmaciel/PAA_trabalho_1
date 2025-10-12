@@ -1,0 +1,114 @@
+
+==============================
+RESULTADOS DO ALGORITMO: BOTTOM_LEFT
+==============================
+
+bin_size  n_itens   item_group  algorithm      n_bins    time_sec    total_filled_area total_void_area   total_void_area_ignore_last
+--------------------------------------------------------------------------------------------------------------
+10        100       grandes     bottom_left    34        0.012993    2780              620               545               
+10        200       grandes     bottom_left    77        0.044999    6564              1136              1081              
+10        400       grandes     bottom_left    140       0.173998    12371             1629              1592              
+10        800       grandes     bottom_left    268       0.720003    24586             2214              2177              
+10        1600      grandes     bottom_left    511       2.997996    47645             3455              3445              
+10        3200      grandes     bottom_left    1004      12.932634   96326             4074              4022              
+10        6400      grandes     bottom_left    1989      53.977507   191745            7155              7091              
+10        12800     grandes     bottom_left    4005      221.904432  390301            10199             10135             
+10        100       medios      bottom_left    22        0.013000    1844              356               305               
+10        200       medios      bottom_left    38        0.050995    3383              417               376               
+10        400       medios      bottom_left    68        0.228999    6480              320               272               
+10        800       medios      bottom_left    140       0.868000    13238             762               697               
+10        1600      medios      bottom_left    261       3.667997    25442             658               588               
+10        3200      medios      bottom_left    500       15.080039   49466             534               479               
+10        6400      medios      bottom_left    1026      61.818289   101606            994               924               
+10        12800     medios      bottom_left    2075      249.937227  205434            2066              2051              
+10        100       pequenos    bottom_left    4         0.018998    388               12                0                 
+10        200       pequenos    bottom_left    8         0.085000    793               7                 2                 
+10        400       pequenos    bottom_left    17        0.313000    1675              25                10                
+10        800       pequenos    bottom_left    33        1.283999    3202              98                7                 
+10        1600      pequenos    bottom_left    65        5.231844    6467              33                3                 
+10        3200      pequenos    bottom_left    130       20.580012   12972             28                0                 
+10        6400      pequenos    bottom_left    259       81.635089   25868             32                0                 
+10        12800     pequenos    bottom_left    513       328.798865  51274             26                2                 
+20        100       grandes     bottom_left    9         0.047000    2891              709               369               
+20        200       grandes     bottom_left    16        0.173998    5623              777               426               
+20        400       grandes     bottom_left    32        0.727998    12028             772               626               
+20        800       grandes     bottom_left    61        2.827569    23411             989               789               
+20        1600      grandes     bottom_left    126       11.481999   49031             1369              1211              
+20        3200      grandes     bottom_left    245       46.405506   95500             2500              2271              
+20        6400      grandes     bottom_left    492       192.715123  193601            3199              2990              
+20        12800     grandes     bottom_left    972       4539.414321 384213            4587              4357              
+20        100       medios      bottom_left    5         0.053999    1534              466               87                
+20        200       medios      bottom_left    9         0.209995    3427              173               76                
+20        400       medios      bottom_left    17        0.803999    6523              277               141               
+20        800       medios      bottom_left    33        3.143000    12596             604               265               
+20        1600      medios      bottom_left    64        13.257598   25135             465               273               
+20        3200      medios      bottom_left    129       54.332911   50982             618               462               
+20        6400      medios      bottom_left    259       216.719337  102746            854               755               
+20        12800     medios      bottom_left    514       1361.162869 204234            1366              1106              
+20        100       pequenos    bottom_left    2         0.063998    412               388               12                
+20        200       pequenos    bottom_left    3         0.303998    823               377               6                 
+20        400       pequenos    bottom_left    5         1.200014    1622              378               11                
+20        800       pequenos    bottom_left    9         5.180998    3273              327               10                
+20        1600      pequenos    bottom_left    16        21.386853   6244              156               0                 
+20        3200      pequenos    bottom_left    32        86.043519   12566             234               0                 
+20        6400      pequenos    bottom_left    65        346.537213  25615             385               6                 
+20        12800     pequenos    bottom_left    128       1361.121995 51037             163               3                 
+
+
+
+==============================
+RESULTADOS DO ALGORITMO: MAX_RECTS
+==============================
+
+bin_size  n_itens   item_group  algorithm      n_bins    time_sec    total_filled_area total_void_area   total_void_area_ignore_last
+--------------------------------------------------------------------------------------------------------------
+10        100       grandes     max_rects      34        0.001000    2780              620               545               
+10        200       grandes     max_rects      78        0.002004    6564              1236              1196              
+10        400       grandes     max_rects      142       0.007000    12371             1829              1792              
+10        800       grandes     max_rects      277       0.023001    24586             3114              3077              
+10        1600      grandes     max_rects      519       0.081000    47645             4255              4245              
+10        3200      grandes     max_rects      1015      0.320000    96326             5174              5122              
+10        6400      grandes     max_rects      2014      1.371003    191745            9655              9591              
+10        12800     grandes     max_rects      4048      5.360696    390301            14499             14465             
+10        100       medios      max_rects      25        0.000000    1844              656               605               
+10        200       medios      max_rects      39        0.000998    3383              517               476               
+10        400       medios      max_rects      71        0.004000    6480              620               556               
+10        800       medios      max_rects      142       0.012998    13238             962               904               
+10        1600      medios      max_rects      264       0.045001    25442             958               893               
+10        3200      medios      max_rects      509       0.172000    49466             1434              1355              
+10        6400      medios      max_rects      1039      0.666985    101606            2294              2229              
+10        12800     medios      max_rects      2092      2.795999    205434            3766              3736              
+10        100       pequenos    max_rects      5         0.000000    388               112               26                
+10        200       pequenos    max_rects      9         0.001001    793               107               32                
+10        400       pequenos    max_rects      18        0.001999    1675              125               65                
+10        800       pequenos    max_rects      33        0.004999    3202              98                25                
+10        1600      pequenos    max_rects      66        0.013996    6467              133               66                
+10        3200      pequenos    max_rects      131       0.049002    12972             128               43                
+10        6400      pequenos    max_rects      259       0.170999    25868             32                7                 
+10        12800     pequenos    max_rects      513       0.645000    51274             26                0                 
+20        100       grandes     max_rects      9         0.000000    2891              709               432               
+20        200       grandes     max_rects      17        0.001997    5623              1177              858               
+20        400       grandes     max_rects      34        0.004001    12028             1572              1379              
+20        800       grandes     max_rects      65        0.010995    23411             2589              2329              
+20        1600      grandes     max_rects      134       0.043001    49031             4569              4290              
+20        3200      grandes     max_rects      256       0.125998    95500             6900              6611              
+20        6400      grandes     max_rects      516       0.452000    193601            12799             12439             
+20        12800     grandes     max_rects      1016      1.898000    384213            22187             21889             
+20        100       medios      max_rects      6         0.001000    1534              866               473               
+20        200       medios      max_rects      10        0.001000    3427              573               469               
+20        400       medios      max_rects      20        0.003993    6523              1477              1089              
+20        800       medios      max_rects      34        0.010000    12596             1004              895               
+20        1600      medios      max_rects      68        0.026999    25135             2065              1921              
+20        3200      medios      max_rects      137       0.083000    50982             3818              3537              
+20        6400      medios      max_rects      273       0.284001    102746            6454              6126              
+20        12800     medios      max_rects      541       1.098000    204234            12166             12019             
+20        100       pequenos    max_rects      2         0.001002    412               388               73                
+20        200       pequenos    max_rects      3         0.000999    823               377               35                
+20        400       pequenos    max_rects      5         0.003000    1622              378               41                
+20        800       pequenos    max_rects      9         0.009001    3273              327               19                
+20        1600      pequenos    max_rects      16        0.012000    6244              156               0                 
+20        3200      pequenos    max_rects      32        0.029001    12566             234               0                 
+20        6400      pequenos    max_rects      65        0.076000    25615             385               33                
+20        12800     pequenos    max_rects      128       0.233001    51037             163               0                 
+
+
