@@ -1,5 +1,6 @@
 import os
 import copy
+from validation import executar_todos_os_testes
 from bidimensional import BinPacking, generate_random_itens, load_data
 
 def run_and_display_results(bin_w, bin_h, itens, test_name):
@@ -101,16 +102,15 @@ def escolher_arquivo():
 def main():
     while True:
         print("\n" + "="*50)
-        print("    INTERFACE DE TESTES PARA BIN PACKING 2D")
+        print("               BIN PACKING 2D")
         print("="*50)
         print("\nEscolha um dos testes abaixo:\n")
         print("1. Teste Pequeno (20 itens)")
         print("2. Teste Médio (100 itens)")
         print("3. Teste Grande (500 itens)")
-        print("4. Teste Desafiador (50 itens grandes)")
-        print("5. Teste com Itens Variados (200 itens)")
-        print("6. Carregar de Arquivo Específico (data/binteste.txt)")
-        print("7. Escolher Arquivo de Teste (.txt da pasta data/binXX/grupo)")
+        print("4. Teste com Itens Variados (200 itens)")
+        print("5. Escolher Arquivo de Teste (.txt da pasta data/binXX/grupo)")
+        print("6. Executar todos os testes (pode demorar um pouco)")
         print("9. Teste Personalizado")
         print("0. Sair\n")
 
@@ -136,27 +136,13 @@ def main():
             run_and_display_results(bin_w, bin_h, itens, test_name)
 
         elif choice == '4':
-            test_name = "Teste Desafiador"
-            itens = generate_random_itens(n=50, min_value=4, max_value=8)
-            run_and_display_results(bin_w, bin_h, itens, test_name)
-
-        elif choice == '5':
             test_name = "Teste com Itens Variados"
             itens_pequenos = generate_random_itens(n=100, min_value=1, max_value=3)
             itens_grandes = generate_random_itens(n=100, min_value=4, max_value=7)
             itens = itens_pequenos + itens_grandes
             run_and_display_results(bin_w, bin_h, itens, test_name)
 
-        elif choice == '6':
-            test_name = "Arquivo Específico"
-            file_path = "data/binteste.txt"
-            try:
-                bp_template, itens = load_data(file_path)
-                run_and_display_results(bp_template.bin_w, bp_template.bin_h, itens, test_name)
-            except Exception as e:
-                print(f"\n[ERRO] {e}")
-
-        elif choice == '7':
+        elif choice == '5':
             file_path = escolher_arquivo()
             if file_path:
                 print(f"\nArquivo selecionado: {file_path}")
@@ -165,9 +151,11 @@ def main():
                     run_and_display_results(bp_template.bin_w, bp_template.bin_h, itens, f"Arquivo: {os.path.basename(file_path)}")
                 except Exception as e:
                     print(f"\n[ERRO] Falha ao carregar arquivo: {e}")
+        elif choice == '6':
+            print("\nExecutando todos os testes automáticos...\n")
+            executar_todos_os_testes()
 
         elif choice == '9':
-            # opção personalizada (sem mudanças)
             try:
                 p_bin_w = int(input("Largura da caixa (padrão 10): ") or "10")
                 p_bin_h = int(input("Altura da caixa (padrão 10): ") or "10")
@@ -185,7 +173,7 @@ def main():
                 print(f"\n[ERRO] {e}")
 
         elif choice == '0':
-            print("\nSaindo do programa. Até mais!")
+            print("\nSaindo do programa.")
             break
 
         else:

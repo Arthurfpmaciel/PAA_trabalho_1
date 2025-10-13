@@ -10,9 +10,6 @@ item_sizes_range = {
     "grandes": [1, 10]
 }
 
-# cria a pasta principal
-os.makedirs("./data", exist_ok=True)
-
 # contadores para cada combinação bin x faixa
 counters = {
     10: {"pequenos": 0, "medios": 0, "grandes": 0},
@@ -21,9 +18,7 @@ counters = {
 
 for bin_size in bin_sizes:
     for faixa, size_range in item_sizes_range.items():
-        # cria subpasta para cada bin e faixa de tamanho
         folder = f"./data/bin{bin_size}/{faixa}"
-        os.makedirs(folder, exist_ok=True)
         
         for n in n_itens_list:
             # gera os dados
