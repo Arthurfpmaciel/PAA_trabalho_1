@@ -1,6 +1,7 @@
 import time
 import random
 import copy
+from graphviz import Digraph
 
 # --- Assumimos Item e Bin conforme implementados antes (id, copy, set_position, fits, pack) ---
 class Item:
@@ -222,11 +223,21 @@ def exact_search_with_external(itens, bin_w=10, bin_h=10, time_limit=None):
         result_bins.append(b)
     return result_bins, z_opt
 
+def algoritmo_exato(itens, bin_w=10, bin_h=10, time_limit=10):
+    """
+    Interface simplificada para o algoritmo exato de Bin Packing 2D.
+    Retorna (bins, num_bins), onde cada bin é um objeto Bin com itens posicionados.
+    """
+    bins_res, z_res = exact_search_with_external(itens, bin_w=bin_w, bin_h=bin_h, time_limit=time_limit)
+    return bins_res, z_res
+
+
+
 # ----------------- Exemplo de uso -----------------
 if __name__ == "__main__":
     random.seed(1)
     # gerar itens, pré-processar por área decrescente
-    itens = [Item(6,2), Item(3,4), Item(4,4), Item(2,2), Item(5,3), Item(3,3)]
+    itens = [Item(1,3),Item(6,2), Item(3,4), Item(4,4), Item(2,2), Item(5,3), Item(3,3), Item(4,5), Item(6,3), Item(1,1), Item(2,2), Item(2,5), Item(2,3),Item(2,2), Item(3,2), Item(7, 5),Item(4,4), Item(1,9)]
     # Ordenar por área decrescente (pré-processamento)
     itens.sort(key=lambda it: it.area(), reverse=True)
     print("Itens (ordenados):", itens)
