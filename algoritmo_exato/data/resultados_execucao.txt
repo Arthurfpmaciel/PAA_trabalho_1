@@ -1,0 +1,23 @@
+
+==============================
+RESULTADOS DO ALGORITMO: E
+==============================
+
+bin_size  n_itens   item_group  algorithm      n_bins    time_sec    total_filled_area total_void_area   z_value           
+--------------------------------------------------------------------------------------------------------------
+10        400       pequenos    e              17        54.660629   1620              80                17                
+10        100       pequenos    e              4         10.401485   381               19                4                 
+10        200       pequenos    e              8         10.293324   762               38                8                 
+10        800       pequenos    e              32        90.839026   3168              32                32                
+
+
+
+==============================
+RESULTADOS DO ALGORITMO: X
+==============================
+
+bin_size  n_itens   item_group  algorithm      n_bins    time_sec    total_filled_area total_void_area   z_value           
+--------------------------------------------------------------------------------------------------------------
+10        400       pequenos    x              17        56.353634   1620              80                17                
+10        100       pequenos    x              4         10.517428   381               19                4                 
+10        200       pequenos    x              8         10.081863   762               38                8                 
