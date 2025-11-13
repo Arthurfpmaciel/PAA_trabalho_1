@@ -1,9 +1,10 @@
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import time
 import random
 import copy
-from graphviz import Digraph
 
-# --- Assumimos Item e Bin conforme implementados antes (id, copy, set_position, fits, pack) ---
+# classe de itens para o algoritmo exato
 class Item:
     _next_id = 0
     def __init__(self, w, h, id=None):
@@ -16,20 +17,27 @@ class Item:
             Item._next_id += 1
         else:
             self.id = id
+    # configurar coordenadas
     def set_position(self,x,y):
         self.x = x
         self.y = y
+    # calcular área
     def area(self):
         return self.w * self.h
+    # copiar item
     def copy(self):
         return Item(self.w, self.h, id=self.id)
+    # representação em string
     def __repr__(self):
         return f"I{self.id}({self.w}x{self.h})"
 
+# classe de caixas para o algorimto exato
 class Bin:
     def __init__(self, w=10, h=10):
         self.w = w; self.h = h
         self.itens = []
+        
+    # 
     def fits(self, item, x, y):
         if x + item.w > self.w or y + item.h > self.h:
             return False
@@ -37,15 +45,22 @@ class Bin:
             if not (x + item.w <= i.x or x >= i.x + i.w or y + item.h <= i.y or y >= i.y + i.h):
                 return False
         return True
+    
     def pack(self,item,x,y):
         if self.fits(item,x,y):
             item.set_position(x,y)
             self.itens.append(item)
             return True
         return False
-    def filled_area(self): return sum(i.area() for i in self.itens)
-    def void_area(self): return self.w*self.h - self.filled_area()
-    def __repr__(self): return f"Bin({len(self.itens)} items, filled={self.filled_area()}/{self.w*self.h})"
+    
+    def filled_area(self):
+        return sum(i.area() for i in self.itens)
+    
+    def void_area(self):
+        return self.w*self.h - self.filled_area()
+    
+    def __repr__(self):
+        return f"Bin({len(self.itens)} items, filled={self.filled_area()}/{self.w*self.h})"
 
 # --- utilitários (posições candidatas, lower bound e inner_enumeration simples / placeholder) ---
 def gerar_posicoes_candidatas(bin_sim:Bin, item:Item):
@@ -231,7 +246,23 @@ def algoritmo_exato(itens, bin_w=10, bin_h=10, time_limit=10):
     bins_res, z_res = exact_search_with_external(itens, bin_w=bin_w, bin_h=bin_h, time_limit=time_limit)
     return bins_res, z_res
 
-
+def show_bins(bins):
+        all_items = sum(len(b.itens) for b in bins)
+        colors = plt.get_cmap('tab20', all_items)
+        color_index = 0
+        for i, bin in enumerate(bins):
+            fig, ax = plt.subplots()
+            ax.set_title(f"Bin {i+1}")
+            ax.set_xlim(0, bin.w)
+            ax.set_ylim(0, bin.h)
+            ax.set_aspect('equal')
+            for i in bin.itens:
+                color = colors(color_index % all_items)
+                rect = patches.Rectangle((i.x, i.y), i.w, i.h, linewidth=1, edgecolor='black', facecolor=color)
+                ax.add_patch(rect)
+                ax.text(i.x + i.w/2, i.y + i.h/2, f"{i.w}x{i.h}", ha='center', va='center')
+                color_index+=1
+        plt.show()
 
 # ----------------- Exemplo de uso -----------------
 if __name__ == "__main__":
@@ -247,3 +278,4 @@ if __name__ == "__main__":
     for i,b in enumerate(bins_res):
         print(f" Bin {i+1}: {b}")
         print("  itens:", b.itens)
+    show_bins(bins_res)

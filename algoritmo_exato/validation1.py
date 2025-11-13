@@ -18,10 +18,11 @@ for i in bin_file:
     for j in group_file:
         files = os.listdir(f"./data/{i}/{j}")
         for f in files:
+            print(f)
             bin_w, bin_h, itens = load_data(f"./data/{i}/{j}/{f}")
             itens_copy = copy.deepcopy(itens)
             start = time.time()
-            bins_res, z_res = exact_search_with_external(itens_copy, bin_w, bin_h,10)
+            bins_res, z_res = exact_search_with_external(itens_copy, bin_w, bin_h,time_limit=60)
             end = round(time.time() - start,6)
             result = [f, bin_w, len(itens), j, len(bins_res), end, total_filled_area(bins_res), total_void_area(bins_res), z_res]
             print(result)

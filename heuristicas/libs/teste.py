@@ -9,4 +9,5 @@ file = sys.argv[1]
 bp, itens = bpp.load_data(file)
 
 bp.max_rects(itens)
+# bp.bottom_left(itens)
 bp.show_bins()
