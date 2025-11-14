@@ -142,6 +142,7 @@ def branch_external_v2(itens, bin_w, bin_h, inner_cache, best_z, time_limit=None
 # wrapper que usa branch_external e reconstrói Bins com posições
 def exact_search_with_external(itens, bin_w=10, bin_h=10, time_limit=None):
     inner_cache = {}
+    itens = sorted(itens, key=lambda it: it.area(), reverse=True)
     assignment, z_opt, pos_map = branch_external_v2(itens, bin_w, bin_h, inner_cache, best_z=None, time_limit=time_limit)
     if assignment is None:
         # fallback: retorna solução heurística

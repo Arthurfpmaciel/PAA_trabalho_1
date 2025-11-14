@@ -35,7 +35,7 @@ def teste_exato(classe, n, time_limit=10):
     return [classe, n, end, n_bins, len(bins_res)]
 
 
-time_limit = 300
+time_limit = 60
 for classe in classes:
     print(f"-Classe {classe}")
     for n in ns:
