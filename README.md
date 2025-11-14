@@ -1,40 +1,45 @@
-# Repositorio Bin Packing Bidimensional - Algoritmos Exatos e Heurísticas
+Bin Packing Bidimensional (BP2D) - Algoritmos Exatos e Heurísticas
+==================================================================
 
-Este é o repositório do trabalho da disciplina de Projeto e Análise de Algoritmos, no qual foram desenvolvidos um algoritmo exato e duas heurísticas principais, Bottom-Left e MaxRects, para o problema do Bin Packing Bidimensional (BP2D).
+Este repositório contém o trabalho da disciplina Projeto e Análise de Algoritmos,
+no qual foram desenvolvidos:
 
-# Instruções de Execução 
+- Um algoritmo exato
+- Duas heurísticas principais: Bottom-Left e MaxRects
 
-1. (opcional) crie um ambiente virtual
+para resolver o problema do Bin Packing Bidimensional (BP2D).
 
-```sh python -m venv 
-venv./venv/Scrips/activate
-```
-2. instale as dependências
+------------------------------------------------------------------
+Instruções de Execução
+------------------------------------------------------------------
 
-```sh
-pip install -r requirements.txt
-```
+1. (Opcional) Criar ambiente virtual
+   ```sh
+   python -m venv venv
+   source venv/bin/activate   # Linux/Mac
+   venv\Scripts\activate      # Windows
+   ```
+2. Instalar dependências
+   ```sh
+   pip install -r requirements.txt
+   ```
+3. Entrar no diretório do algoritmo desejado
 
-3. Use o comando para entrar no diretório referente ao tipo de algoritmo que deseja executar:
-
-- Algoritmo exato:
-```sh
-python cd algoritmo_exato
-```
-
-- Heurísticas: 
-
-```sh
-python cd algoritmo_exato
-```
-
-4. Para executar:
-- Algoritmo exato: 
-```sh
-python main.py
-```
-- Heurístsicas: 
-
-```sh
-python ./libs/main.py
-```
+   - Algoritmo Exato:
+     ```sh
+     cd algoritmo_exato
+     ```
+   - Heurísticas:
+     ```sh
+     cd heuristicas
+     ```
+4. Executar
+    
+   - Algoritmo Exato:
+     ```sh
+     python main.py
+     ```
+   - Heurísticas:
+     ```sh
+     python libs/main.py
+     ```
