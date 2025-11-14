@@ -47,7 +47,7 @@ def menu_principal():
                 except ValueError:
                     print("Entrada inválida! Usando time limit padrão = 60.")
                     time_limit = 60
-            validation()
+            validation(time_limit)
         elif opcao == "0":
             print("Encerrando...")
             break
