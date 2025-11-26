@@ -5,7 +5,7 @@ from libs.utils import load_data
 import pandas as pd
 
 def validation(group):
-    file_name = "./data/meta_val.csv"
+    file_name = f"./data/meta_val_{group}.csv"
     df = pd.DataFrame(columns=["file","item_group","bin_size","n_itens","n_bins","time_sec","total_void_area"])
     print("\nExecutando todos os testes automáticos...\n")
     bin_file = ["bin10","bin20"]
