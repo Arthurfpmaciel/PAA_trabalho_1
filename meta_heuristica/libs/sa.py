@@ -199,7 +199,7 @@ def op_2opt(perm):
     p[i:j+1] = list(reversed(p[i:j+1]))
     return p
 
-# block swap (garante blocos disjuntos e não altera perm original)
+# block swap
 def op_block_swap(perm, max_block=4):
     n = len(perm)
     if n < 4:
@@ -230,7 +230,7 @@ def op_block_swap(perm, max_block=4):
     new = p[:i] + block2 + p[i+size1:j] + block1 + p[j+size2:]
     return new
 
-# block insertion (remove bloco e insere em outra posição); sem alterar perm original
+# block insertion
 def op_block_insertion(perm, max_block=4):
     n = len(perm)
     if n < 4:
@@ -240,7 +240,6 @@ def op_block_insertion(perm, max_block=4):
     block_size = random.randint(1, max_block_size)
     block = perm[i:i+block_size]
     remainder = perm[:i] + perm[i+block_size:]
-    # ajustar posição de inserção j referente ao remainder
     if j > i:
         j = j - block_size
         if j < 0:
@@ -253,7 +252,7 @@ def op_block_insertion(perm, max_block=4):
     new = remainder[:j] + block + remainder[j:]
     return new
 
-# rotate: NÃO modifica o Item original; cria uma nova lista substituindo o item por cópia rotacionada
+# rotate
 def op_rotate(perm):
     p = perm[:]
     if len(p) > 0:
@@ -263,7 +262,7 @@ def op_rotate(perm):
         p[idx] = new_item
     return p
 
-# swap (seguro: opera em cópia)
+# swap
 def op_swap(perm):
     n = len(perm)
     if n < 2:
@@ -273,7 +272,7 @@ def op_swap(perm):
     p[i], p[j] = p[j], p[i]
     return p
 
-# insertion (seguro: opera em cópia)
+# insertion
 def op_insertion(perm):
     n = len(perm)
     if n < 2:
@@ -284,7 +283,7 @@ def op_insertion(perm):
     p.insert(j, item)
     return p
 
-# operador unificado (usa escolha ponderada)
+# operador unificado
 def random_neighbor(perm):
     operations = [op_2opt, op_block_swap, op_block_insertion, op_rotate, op_swap, op_insertion]
     weights = [1, 1, 1, 3, 2, 2]
@@ -302,7 +301,7 @@ def simulated_annealing(items, bin_w=10, bin_h=10, method='mr',
     best_cost = curr_cost
     best_bp = bp_curr
     n = len(items)
-    L = max(1, L_factor * n)
+    L = min(max(1, L_factor * n),2000)
     T = T0
     iters = 0
     history = []
@@ -332,34 +331,32 @@ def simulated_annealing(items, bin_w=10, bin_h=10, method='mr',
         'history': history
     }
 
-# --- Exemplo de execução ---
-random.seed(1)
+# random.seed(1)
 
-# gerar instancia
-bp, itens = generate_data(bin_w=10, bin_h=10, min_item_size=1, max_item_size=6, n_itens=800)
+# # gerar instancia
+# bp, itens = generate_data(bin_w=10, bin_h=10, min_item_size=1, max_item_size=6, n_itens=800)
 
-bp1 = BinPacking(bp.bin_w, bp.bin_h)
-time1 = bp1.bottom_left(itens)
-print("tempo MR:", time1)
-print("Número de bins:", len(bp1.bins))
-print("area preenchida:", bp1.filled_areas())
-print("void areas (ignore last):", bp1.void_areas(ignore_last=True))
-# bp1.show_bins()
+# bp1 = BinPacking(bp.bin_w, bp.bin_h)
+# time1 = bp1.bottom_left(itens)
+# print("tempo MR:", time1)
+# print("Número de bins:", len(bp1.bins))
+# print("area preenchida:", bp1.filled_areas())
+# print("void areas (ignore last):", bp1.void_areas(ignore_last=True))
 
-# rodar SA
-result = simulated_annealing(itens,
-                             bin_w=bp.bin_w,
-                             bin_h=bp.bin_h,
-                             method='mr',
-                             T0=1000.0,
-                             alpha=0.95,
-                             L_factor=2,
-                             T_min=1e-3,
-                             max_iters=100)
+# # rodar SA
+# result = simulated_annealing(itens,
+#                              bin_w=bp.bin_w,
+#                              bin_h=bp.bin_h,
+#                              method='mr',
+#                              T0=1000.0,
+#                              alpha=0.95,
+#                              L_factor=2,
+#                              T_min=1e-3,
+#                              max_iters=100)
 
-print("Tempo:", result['time'])
-print("Número de bins (melhor):", len(result['best_bp'].bins))
-print("Void areas (ignore last):", result['best_bp'].void_areas(ignore_last=True))
-print("Area preenchida:", result['best_bp'].filled_areas())
+# print("Tempo:", result['time'])
+# print("Número de bins (melhor):", len(result['best_bp'].bins))
+# print("Void areas (ignore last):", result['best_bp'].void_areas(ignore_last=True))
+# print("Area preenchida:", result['best_bp'].filled_areas())
 
 
