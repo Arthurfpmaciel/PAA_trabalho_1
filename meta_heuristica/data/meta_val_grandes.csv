@@ -1,0 +1,11 @@
+file,item_group,bin_size,n_itens,n_bins,time_sec,total_void_area
+teste_bin10_grandes_1.txt,grandes,10,100,33,36.474462270736694,157
+teste_bin10_grandes_2.txt,grandes,10,200,64,226.63901710510254,299
+teste_bin10_grandes_3.txt,grandes,10,400,123,1420.0095801353455,335
+teste_bin10_grandes_4.txt,grandes,10,800,237,5177.873803853989,326
+teste_bin10_grandes_5.txt,grandes,10,1600,483,19919.07587647438,741
+teste_bin20_grandes_1.txt,grandes,20,100,8,36.55356764793396,142
+teste_bin20_grandes_2.txt,grandes,20,200,16,154.9396743774414,324
+teste_bin20_grandes_3.txt,grandes,20,400,30,816.2680931091309,235
+teste_bin20_grandes_4.txt,grandes,20,800,60,2469.715586423874,431
+teste_bin20_grandes_5.txt,grandes,20,1600,123,8390.038915395737,239

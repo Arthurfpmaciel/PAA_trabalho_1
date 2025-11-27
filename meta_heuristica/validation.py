@@ -17,7 +17,7 @@ def validation(group):
                 print(f)
                 bin_w, bin_h, itens = load_data(f"./data/{i}/{j}/{f}")
                 itens_copy = copy.deepcopy(itens)
-                result = simulated_annealing(itens_copy, bin_w, bin_h,'mr',L_factor=5,max_iters=150)
+                result = simulated_annealing(itens_copy, bin_w, bin_h,'mr',L_factor=5, alpha=0.9 ,max_iters=100)
                 bins_res = result['best_bp']
                 line = [f, j, bin_w, len(itens_copy), len(bins_res.bins), result['time'], bins_res.void_areas()]
                 print(line)
@@ -26,5 +26,5 @@ def validation(group):
     print(f"\nArquivo CSV salvo em: {os.path.abspath(file_name)}\n")
 
 groups = ["pequenos","medios","grandes"]
-idx = 0 # altere o índice para fazer testes dos outros grupos
+idx = 2 # altere o índice para fazer testes dos outros grupos
 validation(groups[idx])
