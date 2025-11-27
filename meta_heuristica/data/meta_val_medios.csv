@@ -1,0 +1,11 @@
+file,item_group,bin_size,n_itens,n_bins,time_sec,total_void_area
+teste_bin10_medios_1.txt,medios,10,100,16,26.558722496032715,17
+teste_bin10_medios_2.txt,medios,10,200,31,145.14290285110474,46
+teste_bin10_medios_3.txt,medios,10,400,67,963.7959263324738,85
+teste_bin10_medios_4.txt,medios,10,800,125,3280.842007637024,41
+teste_bin10_medios_5.txt,medios,10,1600,265,11495.02659535408,35
+teste_bin20_medios_1.txt,medios,20,100,5,39.83150935173035,299
+teste_bin20_medios_2.txt,medios,20,200,8,164.6407709121704,122
+teste_bin20_medios_3.txt,medios,20,400,17,740.0296878814697,232
+teste_bin20_medios_4.txt,medios,20,800,31,1861.194745540619,95
+teste_bin20_medios_5.txt,medios,20,1600,63,5274.268140792847,184

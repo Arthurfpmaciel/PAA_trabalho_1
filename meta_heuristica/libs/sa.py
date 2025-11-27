@@ -144,23 +144,6 @@ class BinPacking:
                 self.new_bin(type="mr")
                 self.bins[-1].insert(item)
         return time.time()-start
-    def show_bins(self):
-        all_items = sum(len(b.itens) for b in self.bins)
-        colors = plt.get_cmap('tab20', max(1, all_items))
-        color_index = 0
-        for idx, bin in enumerate(self.bins):
-            fig, ax = plt.subplots()
-            ax.set_title(f"Bin {idx+1}")
-            ax.set_xlim(0, bin.w)
-            ax.set_ylim(0, bin.h)
-            ax.set_aspect('equal')
-            for it in bin.itens:
-                color = colors(color_index % max(1, all_items))
-                rect = patches.Rectangle((it.x, it.y), it.w, it.h, linewidth=1, edgecolor='black', facecolor=color)
-                ax.add_patch(rect)
-                ax.text(it.x + it.w/2, it.y + it.h/2, f"{it.w}x{it.h}", ha='center', va='center')
-                color_index+=1
-        plt.show()
     def void_areas(self, ignore_last = False):
         void_areas = sum([b.void_area() for b in self.bins])
         if ignore_last and len(self.bins)>0:
@@ -168,6 +151,24 @@ class BinPacking:
         return void_areas
     def filled_areas(self):
         return sum([b.filled_area() for b in self.bins])
+    
+def show_bins(self):
+    all_items = sum(len(b.itens) for b in self.bins)
+    colors = plt.get_cmap('tab20', max(1, all_items))
+    color_index = 0
+    for idx, bin in enumerate(self.bins):
+        fig, ax = plt.subplots()
+        ax.set_title(f"Bin {idx+1}")
+        ax.set_xlim(0, bin.w)
+        ax.set_ylim(0, bin.h)
+        ax.set_aspect('equal')
+        for it in bin.itens:
+            color = colors(color_index % max(1, all_items))
+            rect = patches.Rectangle((it.x, it.y), it.w, it.h, linewidth=1, edgecolor='black', facecolor=color)
+            ax.add_patch(rect)
+            ax.text(it.x + it.w/2, it.y + it.h/2, f"{it.w}x{it.h}", ha='center', va='center')
+            color_index+=1
+    plt.show()
 
 def generate_data(bin_w, bin_h, min_item_size, max_item_size, n_itens):
     itens = generate_random_itens(n_itens, min_item_size, max_item_size)
