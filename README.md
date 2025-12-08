@@ -6,6 +6,7 @@ no qual foram desenvolvidos:
 
 - Um algoritmo exato
 - Duas heurísticas principais: Bottom-Left e MaxRects
+- Meta-heurística simulated annealing (SA)
 
 para resolver o problema do Bin Packing Bidimensional (BP2D).
 
@@ -33,8 +34,13 @@ Instruções de Execução
      ```sh
      cd heuristicas
      ```
+   - Meta-heurística:
+     ```sh
+     cd meta_heuristica
+     ```
+     
 4. Executar
-    
+  
    - Algoritmo Exato:
      ```sh
      python main.py
@@ -43,3 +49,8 @@ Instruções de Execução
      ```sh
      python libs/main.py
      ```
+   - Meta-heurística:
+     ```sh
+     python main.py
+     ```
+
