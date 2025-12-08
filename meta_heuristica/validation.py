@@ -24,7 +24,3 @@ def validation(group):
                 df.loc[len(df)] = line
     df.to_csv(file_name,index=False)
     print(f"\nArquivo CSV salvo em: {os.path.abspath(file_name)}\n")
-
-#groups = ["pequenos","medios","grandes"]
-#idx = 2 # altere o índice para fazer testes dos outros grupos
-#validation(groups[idx])

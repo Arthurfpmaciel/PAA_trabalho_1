@@ -33,7 +33,6 @@ def menu_principal():
                 except ValueError:
                     print("Entrada inválida! Usando time limit padrão = 300.")
                     time_limit = 300
-            # validation2(time_limit)
         elif opcao == "3":
             groups = ["pequenos", "medios", "grandes"]
 
@@ -61,7 +60,6 @@ def menu_principal():
 def teste_sa_personalizado():
     print("\n=== Testar Simulated Annealing (BP2D) ===")
 
-    # --- quantidade de itens ---
     try:
         qtd = int(input("Quantidade de itens: "))
     except ValueError:
@@ -72,7 +70,6 @@ def teste_sa_personalizado():
         print("\nERRO: A quantidade mínima de itens é 1.")
         return
 
-    # --- tamanho máximo dos itens ---
     inp = input("Tamanho máximo do item (padrão 10): ").strip()
     try:
         tamanho_itens = int(inp) if inp else 10
@@ -84,7 +81,6 @@ def teste_sa_personalizado():
         print("\nERRO: O tamanho do item deve ser pelo menos 1.")
         return
 
-    # --- tamanho do bin ---
     inp = input("Tamanho da largura/altura do bin (padrão 10): ").strip()
     try:
         bin_w = bin_h = int(inp) if inp else 10
@@ -96,12 +92,10 @@ def teste_sa_personalizado():
         print("\nERRO: O tamanho mínimo do bin é 5.")
         return
 
-    # --- validação: item precisa caber no bin ---
     if tamanho_itens > bin_w or tamanho_itens > bin_h:
         print("\nERRO: O tamanho máximo do item deve ser menor ou igual ao tamanho do bin!")
         return
 
-    # --- parâmetros do SA ---
     print("\n--- Parâmetros do Simulated Annealing ---")
 
     inp = input("Temperatura inicial T0 (padrão 1000): ").strip()
@@ -142,10 +136,8 @@ def teste_sa_personalizado():
     inp = input("Heurística de encaixe (mr, bl, bf) [padrão = mr]: ").strip().lower()
     method = inp if inp else "mr"
 
-    # --- geração dos itens ---
     itens = generate_random_itens(qtd, 1, tamanho_itens)
 
-    # --- execução ---
     print("\nExecutando Simulated Annealing...")
     start = time.time()
     resultado = simulated_annealing(
@@ -161,14 +153,18 @@ def teste_sa_personalizado():
     )
     end = time.time()
 
-    # --- resultados ---
     print("\n=== Resultado Simulated Annealing ===")
     print(f"Tempo total: {end - start:.4f} s")
     print(f"Bins Usados: {len(resultado['best_bp'].bins)}")
 
-    # --- mostrar bins ---
     bins = resultado["best_bp"]
     show_bins(bins)
 
 if __name__ == "__main__":
     menu_principal()
+
+
+# apresentação: executar os testes:
+    # 10 itens de tamanho até 10
+    # 20 itens de tamanho ate 7
+    # 50 itens de tamanho até 3
